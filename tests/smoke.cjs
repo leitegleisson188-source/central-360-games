@@ -15,6 +15,8 @@ const root = path.resolve(__dirname, "..");
 const source = {
   html: fs.readFileSync(path.join(root, "index.html"), "utf8"),
   css: fs.readFileSync(path.join(root, "assets/style.css"), "utf8"),
+  promoCss: fs.readFileSync(path.join(root, "assets/promos.css"), "utf8"),
+  promos: fs.readFileSync(path.join(root, "assets/promos.js"), "utf8"),
   data: fs.readFileSync(path.join(root, "assets/data.js"), "utf8"),
   videos: fs.readFileSync(path.join(root, "assets/videos.js"), "utf8"),
   library: fs.readFileSync(path.join(root, "assets/biblioteca.js"), "utf8"),
@@ -58,6 +60,7 @@ function boot(hash = "#/", mutate) {
   vm.runInContext(source.videos, context, { filename: "videos.js" });
   if (mutate) mutate(window.C360_GAMES, window.C360_VIDEOS);
   vm.runInContext(source.library, context, { filename: "biblioteca.js" });
+  vm.runInContext(source.promos, context, { filename: "promos.js" });
   vm.runInContext(source.app, context, { filename: "app.js" });
   return {
     window, document,
@@ -283,4 +286,92 @@ test("slug temático desconhecido retorna mensagem de guia não encontrado", () 
   const page = boot("#/biblioteca/nada-aqui");
   assert.match(page.html, /Assunto não encontrado/);
   assert.match(page.html, /#\/biblioteca/);
+});
+
+
+test("homepage apresenta três banners gráficos vetoriais com links internos", () => {
+  const { window, html } = boot("#/");
+  const promos = window.C360_PROMOS.items;
+  assert.equal(promos.length, 3);
+  assert.equal(new Set(promos.map(p => p.id)).size, 3);
+  assert.match(html, /Confira os destaques/);
+  assert.equal((html.match(/class="feature-promo-card/g)||[]).length, 3);
+  for (const promo of promos) {
+    assert.match(promo.image, /^\.\/assets\/art-[a-z-]+\.svg$/);
+    assert.ok(fs.statSync(path.join(root, promo.image)).isFile(), promo.image+" ausente");
+    assert.match(promo.link, /^#\//);
+    assert.ok(promo.title && promo.cta);
+    assert.ok(html.includes(promo.image));
+    assert.ok(html.includes(promo.link));
+  }
+});
+
+test("botão de novidades e CSS de popup carregam no HTML público", () => {
+  assert.ok(source.html.includes('id="open-promos"'));
+  assert.ok(source.html.includes('id="open-promos-mobile"'));
+  assert.ok(source.html.includes('src="./assets/promos.js"'));
+  assert.ok(source.html.includes('href="./assets/promos.css"'));
+  assert.match(source.promoCss, /\.promo-popup\[hidden\]/);
+  assert.match(source.promoCss, /prefers-reduced-motion/);
+});
+
+test("pop-in rotativo abre manualmente, passa de card e fecha", () => {
+  let root, scheduled, lastStored = 0;
+  const nodes = {};
+  function button(name) {
+    if (!nodes[name]) nodes[name] = { handlers: {}, addEventListener(evt, fn){ this.handlers[evt]=fn }, focus() {} };
+    return nodes[name];
+  }
+  const doc = {
+    readyState: "complete",
+    visibilityState: "visible",
+    activeElement: { focus(){} },
+    getElementById(id) {
+      if (id === "promo-popup") return root || null;
+      if (id === "open-promos" || id === "open-promos-mobile") return button(id);
+      return null;
+    },
+    createElement() {
+      root = {
+        hidden: true,
+        innerHTML: "",
+        className: "",
+        setAttribute(){},
+        querySelector(selector){ return button(selector) }
+      };
+      return root;
+    },
+    body:{appendChild(){}},
+    addEventListener(){}
+  };
+  const w={
+    location:{hash:"#/"},
+    setTimeout(fn){scheduled=fn},
+    matchMedia(){return {matches:false}},
+    localStorage:{getItem(){return String(lastStored||"")},setItem(_k,v){lastStored=Number(v)}}
+  };
+  const ctx=vm.createContext({document:doc,window:w,Date,console});
+  vm.runInContext(source.promos,ctx,{filename:"promos.js"});
+  assert.ok(root && root.hidden);
+  assert.equal(w.C360_PROMOS.items.length,3);
+  assert.equal(typeof scheduled,"function");
+  button("open-promos").handlers.click();
+  assert.equal(root.hidden,false);
+  assert.match(root.innerHTML,/promo-popup-close/);
+  assert.match(root.innerHTML,/1 \/ 3/);
+  button(".promo-popup-next").handlers.click();
+  assert.match(root.innerHTML,/2 \/ 3/);
+  button(".promo-popup-close").handlers.click();
+  assert.equal(root.hidden,true);
+  scheduled();
+  assert.equal(root.hidden,false);
+  assert.ok(lastStored>0);
+});
+
+test("promo automático respeita origem e intervalo de sete dias", () => {
+  const code = source.promos;
+  assert.match(code,/cooldownMs=7\*24\*60\*60\*1000/);
+  assert.match(code,/last&&Date\.now\(\)-last<cooldownMs/);
+  assert.match(code,/hash!=="#\/"/);
+  assert.match(code,/visibilityState==="hidden"/);
 });

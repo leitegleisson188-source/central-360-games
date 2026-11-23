@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Estádio de futebol virtual à noite com iluminação verde"><title>Futebol clássico Central 360 — Arte vetorial original</title>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08101a"/><stop offset=".55" stop-color="#12352c"/><stop offset="1" stop-color="#070e18"/></linearGradient>
+  <radialGradient id="halo"><stop stop-color="#71ed9f" stop-opacity=".45"/><stop offset="1" stop-color="#3dbd8c" stop-opacity="0"/></radialGradient>
+  <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9ffa2"/><stop offset=".55" stop-color="#7ee6a2"/><stop offset="1" stop-color="#28a989"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#2a5c53" stop-opacity=".88"/><stop offset="1" stop-color="#0b1720" stop-opacity=".98"/></linearGradient>
+  <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M52 0H0V52" fill="none" stroke="#afffb4" stroke-opacity=".08"/></pattern>
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="15"/></filter>
+  <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="26" stdDeviation="28" flood-color="#000" flood-opacity=".56"/></filter>
+</defs>
+<defs><radialGradient id="stadium"><stop stop-color="#426d58"/><stop offset="1" stop-color="#06131b"/></radialGradient><linearGradient id="field" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#3d9750"/><stop offset="1" stop-color="#0a382f"/></linearGradient></defs>
+<rect width="1200" height="675" fill="#06111a"/><rect width="1200" height="675" fill="url(#grid)"/>
+<ellipse cx="945" cy="300" rx="420" ry="310" fill="url(#stadium)"/>
+<g opacity=".85"><path d="M520 311q355-344 690 0v197q-355-180-690 0Z" fill="#0b2027" stroke="#397c74" stroke-width="5"/><path d="M545 318q344-298 650 0" fill="none" stroke="#7ce3ab" stroke-opacity=".45" stroke-width="18"/><path d="M548 343q322-255 643 1" fill="none" stroke="#2d6870" stroke-width="27"/><path d="M551 376q316-240 635 0" fill="none" stroke="#2b5757" stroke-width="30"/><path d="M568 401q307-202 600 0" fill="none" stroke="#1a424b" stroke-width="22"/></g>
+<g fill="#d7ffe2"><g transform="translate(615 190)"><circle cx="0" cy="0" r="4"/><circle cx="52" cy="-35" r="4"/><circle cx="99" cy="-60" r="3"/><circle cx="154" cy="-83" r="3"/><circle cx="210" cy="-87" r="3"/><circle cx="267" cy="-70" r="4"/><circle cx="323" cy="-49" r="3"/><circle cx="385" cy="-12" r="4"/></g><g opacity=".7"><circle cx="601" cy="356" r="3"/><circle cx="656" cy="308" r="3"/><circle cx="712" cy="272" r="4"/><circle cx="780" cy="254" r="3"/><circle cx="857" cy="244" r="3"/><circle cx="956" cy="273" r="3"/><circle cx="1049" cy="327" r="3"/><circle cx="1125" cy="381" r="3"/></g></g>
+<g stroke="#bcf5c5" fill="none" stroke-width="5"><path d="M560 180 520 310M1125 178 1180 310"/><path d="M524 171h36m545-2h40"/></g>
+<g fill="#effff1" filter="url(#glow)" opacity=".9"><ellipse cx="546" cy="176" rx="32" ry="10"/><ellipse cx="1125" cy="173" rx="35" ry="10"/></g><g fill="#e6fff0"><ellipse cx="546" cy="176" rx="27" ry="7"/><ellipse cx="1125" cy="173" rx="31" ry="7"/></g>
+<path d="M470 525Q811 326 1200 503v172H470Z" fill="url(#field)" stroke="#98e894" stroke-width="4"/><path d="M554 587Q846 434 1198 567M814 476q80 42 66 130m-95-90q88 20 115 77" fill="none" stroke="#c9ffcc" stroke-opacity=".68" stroke-width="4"/>
+<path d="M725 530q31-63 123-66" fill="none" stroke="#cff9cb" stroke-width="4" opacity=".7"/>
+<g transform="translate(706 375)" filter="url(#shadow)"><circle cx="118" cy="115" r="86" fill="#f0f5ed" stroke="#d1e0d1" stroke-width="7"/><path d="m118 59 38 28-14 42H94L81 87Z" fill="#1c3a39"/><path d="m118 59 3-27m35 55 35-15m-49 57 23 42m-71-42-27 42M81 87 49 72" fill="none" stroke="#1c3a39" stroke-width="9"/><path d="M58 135q50 27 107 1M82 52q36-29 78 1" fill="none" stroke="#779c96" stroke-width="5" opacity=".6"/></g>
+<g opacity=".5" fill="none" stroke="#a4fbaa"><path d="M477 514q77-59 135-67M480 551q76-61 135-70M1015 112q104 10 145 80" stroke-width="3"/></g>
+<rect width="1200" height="675" fill="url(#bg)" opacity=".12"/>
+</svg>
