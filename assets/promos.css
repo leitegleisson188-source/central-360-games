@@ -1,0 +1,42 @@
+
+/* Central 360 | artes promocionais e pop-in */
+.promo-header-button{display:flex;align-items:center;gap:7px;justify-content:center;min-height:41px;padding:0 13px;border:1px solid #527958;border-radius:10px;background:#213b30;color:#b0ff95;font-size:12px;font-weight:900;white-space:nowrap}
+.promo-header-button:hover{background:#2c503d}.promo-header-button>span:first-child{font-size:16px}
+.promo-mobile-button{width:100%;margin-top:12px;padding:12px;border:1px solid #64966c;border-radius:10px;background:#1e382d;color:#b8f6a1;text-align:left;font-weight:800}
+.feature-promo-section{padding-top:10px;padding-bottom:24px}
+.feature-promo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.feature-promo-card{position:relative;display:flex;align-items:end;isolation:isolate;min-width:0;min-height:297px;overflow:hidden;border-radius:14px;border:1px solid #486556;background:#10232a;box-shadow:0 15px 35px #0006;transition:transform .2s,border-color .2s}
+.feature-promo-card:hover{transform:translateY(-4px);border-color:#9de89d}
+.feature-promo-card>img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;transition:transform .3s}
+.feature-promo-card:hover>img{transform:scale(1.05)}
+.feature-promo-shade{position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#07101af5 0%,#07121bdb 44%,#07141b12 100%)}
+.feature-promo-content{display:flex;flex-direction:column;padding:23px;width:100%;color:#f2fff0}
+.feature-promo-kicker{color:#aafba9;font-size:10px;letter-spacing:1.55px;font-weight:900;margin-bottom:11px}
+.feature-promo-content strong{font-size:25px;letter-spacing:-.8px;line-height:1.13;font-weight:950;max-width:310px;text-shadow:0 3px 18px #000b}
+.feature-promo-link{display:flex;justify-content:space-between;gap:12px;color:#b4fc9e;border-top:1px solid #b1ffa04a;margin-top:16px;padding-top:12px;font-size:11px;font-weight:950;letter-spacing:.65px}
+.feature-promo-card.theme-cyan .feature-promo-link,.feature-promo-card.theme-cyan .feature-promo-kicker{color:#92efe8}
+.feature-promo-card.theme-mint .feature-promo-link,.feature-promo-card.theme-mint .feature-promo-kicker{color:#a9f4ce}
+.promo-popup{position:fixed;z-index:100;bottom:20px;right:20px;width:min(385px,calc(100vw - 28px));overflow:hidden;border-radius:16px;background:#101a25;border:1px solid #639474;box-shadow:0 24px 65px #000b,0 0 38px #7df5a122;color:#effaf2;animation:popin-show .3s ease-out}
+.promo-popup[hidden]{display:none!important}
+@keyframes popin-show{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.promo-popup-image{height:138px;position:relative;overflow:hidden;background:#10282a}
+.promo-popup-image img{display:block;width:100%;height:100%;object-fit:cover}
+.promo-popup-image-shade{position:absolute;inset:0;background:linear-gradient(0deg,#101a25c9,transparent 80%)}
+.promo-popup-counter{position:absolute;bottom:11px;right:13px;padding:3px 9px;color:#eaffec;background:#08131bcc;border:1px solid #85bb9955;border-radius:6px;font-size:11px;font-weight:900}
+.promo-popup-body{padding:16px 21px 20px}
+.promo-popup-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.promo-popup-kicker{color:#aaf8a7;font-size:10px;letter-spacing:1.25px;font-weight:900}
+.promo-popup-close{display:grid;place-items:center;width:35px;height:35px;color:#f0fff1;background:#26383d;border:1px solid #597272;border-radius:9px;font-size:25px;line-height:1}
+.promo-popup-close:hover{background:#406057}
+.promo-popup-body h2{margin:9px 0;font-size:23px;letter-spacing:-.7px;line-height:1.15}
+.promo-popup-body p{margin:0 0 17px;color:#bbcac6;font-size:13px;line-height:1.58}
+.promo-popup-bottom{display:flex;justify-content:space-between;align-items:center;gap:9px}
+.promo-popup-cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:40px;border-radius:8px;background:#8be86b;color:#0d1f11;padding:9px 13px;font-size:11px;line-height:1.3;font-weight:950;text-align:center}
+.promo-popup-cta:hover{background:#c0ffb1}
+.promo-popup-next{min-height:40px;border:1px solid #557268;border-radius:8px;color:#d4f7df;background:transparent;padding:9px 11px;font-size:12px;font-weight:850;white-space:nowrap}
+.promo-popup-next:hover{border-color:#a9f5bc}
+.promo-popup :focus-visible,.promo-header-button:focus-visible,.feature-promo-card:focus-visible,.promo-mobile-button:focus-visible{outline:3px solid #b8ff9c;outline-offset:3px}
+@media(max-width:1090px){.feature-promo-content{padding:18px}.feature-promo-content strong{font-size:22px}.feature-promo-card{min-height:256px}}
+@media(max-width:840px){.feature-promo-grid{grid-template-columns:repeat(2,1fr)}.feature-promo-card:last-child{grid-column:span 2;min-height:210px}}
+@media(max-width:640px){.promo-header-button{padding:0 9px;min-width:41px}.promo-header-button-text{display:none}.feature-promo-grid{grid-template-columns:1fr;gap:12px}.feature-promo-card,.feature-promo-card:last-child{min-height:225px;grid-column:auto}.feature-promo-content{padding:21px}.feature-promo-content strong{font-size:24px}.promo-popup{left:7px;right:7px;bottom:7px;width:auto;max-height:min(78vh,490px);overflow:auto}.promo-popup-image{height:108px}.promo-popup-body{padding:14px 17px 16px}.promo-popup-body h2{font-size:21px}.promo-popup-body p{font-size:12px;margin-bottom:12px}.promo-popup-cta{font-size:10px;padding:9px}.promo-popup-next{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.promo-popup{animation:none}.feature-promo-card,.feature-promo-card>img{transition:none}}
