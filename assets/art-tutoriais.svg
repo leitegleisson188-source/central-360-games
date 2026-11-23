@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-label="Biblioteca visual de tutoriais com telas e play verde"><title>Vídeos e tutoriais Central 360 — Arte vetorial original</title>
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#08101a"/><stop offset=".55" stop-color="#12352c"/><stop offset="1" stop-color="#070e18"/></linearGradient>
+  <radialGradient id="halo"><stop stop-color="#71ed9f" stop-opacity=".45"/><stop offset="1" stop-color="#3dbd8c" stop-opacity="0"/></radialGradient>
+  <linearGradient id="neon" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c9ffa2"/><stop offset=".55" stop-color="#7ee6a2"/><stop offset="1" stop-color="#28a989"/></linearGradient>
+  <linearGradient id="glass" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#2a5c53" stop-opacity=".88"/><stop offset="1" stop-color="#0b1720" stop-opacity=".98"/></linearGradient>
+  <pattern id="grid" width="52" height="52" patternUnits="userSpaceOnUse"><path d="M52 0H0V52" fill="none" stroke="#afffb4" stroke-opacity=".08"/></pattern>
+  <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="15"/></filter>
+  <filter id="shadow" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="26" stdDeviation="28" flood-color="#000" flood-opacity=".56"/></filter>
+</defs>
+<rect width="1200" height="675" fill="#09121d"/><rect width="1200" height="675" fill="url(#grid)"/><ellipse cx="940" cy="295" rx="400" ry="325" fill="url(#halo)"/>
+<g transform="translate(670 110) rotate(-6 230 180)" filter="url(#shadow)">
+<rect x="0" y="0" width="495" height="360" rx="26" fill="#0b1723" stroke="#6cdd9e" stroke-opacity=".65" stroke-width="4"/>
+<rect x="18" y="19" width="459" height="326" rx="15" fill="#153d3d"/>
+<path d="M18 180q245-130 459 4" fill="none" stroke="#87e9b0" stroke-opacity=".26" stroke-width="52"/>
+<circle cx="250" cy="177" r="93" fill="#66d998" fill-opacity=".23" stroke="#9bfbc0" stroke-opacity=".85" stroke-width="7"/>
+<path d="m225 129 78 48-78 48Z" fill="#dbffe0" stroke="#99f8bc" stroke-width="5" stroke-linejoin="round"/>
+<rect x="37" y="30" width="150" height="15" rx="7" fill="#b6ffc1" opacity=".43"/><rect x="37" y="312" width="160" height="9" rx="5" fill="#91eea7" opacity=".58"/><rect x="208" y="312" width="72" height="9" rx="5" fill="#7ad19b" opacity=".31"/>
+</g>
+<g transform="translate(513 375) rotate(8 120 80)" filter="url(#shadow)">
+<rect x="0" y="0" width="278" height="162" rx="16" fill="#0b1b2a" stroke="#8af5ae" stroke-width="4"/>
+<rect x="12" y="13" width="254" height="137" rx="8" fill="#195650"/>
+<path d="m32 116 68-67 46 36 52-58 40 44" fill="none" stroke="#a1ffbb" stroke-width="10" opacity=".8"/><circle cx="130" cy="81" r="23" fill="#8af1aa" opacity=".66"/><path d="m123 68 23 13-23 13Z" fill="#0a2522"/>
+</g>
+<g transform="translate(960 465) rotate(14 95 60)" filter="url(#shadow)"><rect width="200" height="117" rx="13" fill="#081622" stroke="#61bfad" stroke-width="3"/><rect x="10" y="10" width="180" height="98" rx="7" fill="#1d454e"/><path d="m25 91 40-43 35 26 40-39 35 29" stroke="#92fad2" stroke-width="8" fill="none"/><circle cx="103" cy="55" r="19" fill="#76cdb6"/><path d="m98 44 19 11-19 11Z" fill="#0b2d2b"/></g>
+<g fill="none" stroke="#a0ffd1" opacity=".35" stroke-width="2"><path d="M561 100h78m-44-35v120"/><path d="M514 580h315"/><path d="M1122 52v58m-40-29h80"/></g>
+</svg>
