@@ -52,10 +52,12 @@ async function applyPayment(env,payment){
  const email=String(payment.payer?.email||"").trim().toLowerCase();
  if(!paymentId||total!==order.amount_cents||email!==order.email||String(payment.currency_id||"BRL")!=="BRL")return null;
  if(order.payment_id&&String(order.payment_id)!==paymentId)return null;
- const status=payment.status==="approved"?"paid":payment.status==="rejected"?"rejected":payment.status==="cancelled"?"cancelled":"pending";
- // Nunca rebaixe um pedido confirmado para pending/rejected por notificações atrasadas.
- if(order.status==="paid")return order;
- await env.DB.prepare("UPDATE orders SET payment_id=COALESCE(payment_id,?),payment_status=?,status=?,updated_at=CURRENT_TIMESTAMP WHERE id=? AND (payment_id IS NULL OR payment_id=?) AND status!='paid'")
+ const reversed=["refunded","charged_back","in_mediation"].includes(payment.status);
+ const status=reversed?"revoked":payment.status==="approved"?"paid":payment.status==="rejected"?"rejected":payment.status==="cancelled"?"cancelled":"pending";
+ // Notificações atrasadas não rebaixam pagamento aprovado, mas estorno/chargeback revogam o download.
+ if(order.status==="paid"&&!reversed)return order;
+ if(order.status==="revoked")return order;
+ await env.DB.prepare("UPDATE orders SET payment_id=COALESCE(payment_id,?),payment_status=?,status=?,updated_at=CURRENT_TIMESTAMP WHERE id=? AND (payment_id IS NULL OR payment_id=?)")
  .bind(paymentId,String(payment.status||""),status,orderId,paymentId).run();
  return await env.DB.prepare("SELECT * FROM orders WHERE id=?").bind(orderId).first();
 }
