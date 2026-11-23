@@ -1,0 +1,14 @@
+{
+  "name": "central360-commerce",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/prepare-assets.mjs",
+    "dev": "npm run build && wrangler dev",
+    "deploy": "npm run build && wrangler deploy",
+    "check": "node --check worker.mjs && node ../tests/commerce.test.cjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.45.0"
+  }
+}

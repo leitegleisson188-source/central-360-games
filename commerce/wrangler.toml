@@ -1,0 +1,24 @@
+# Exemplo. Antes de deploy, substitua D1_DATABASE_ID e crie o bucket.
+name = "central-360-games-store"
+main = "./worker.mjs"
+compatibility_date = "2026-11-01"
+
+[vars]
+STORE_ENABLED = "false"
+# APENAS chave pública; o restante deve ser configurado com wrangler secret.
+MP_PUBLIC_KEY = ""
+PUBLIC_ORIGIN = ""
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = ["/api/*"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "central360_store"
+database_id = "D1_DATABASE_ID"
+
+[[r2_buckets]]
+binding = "DELIVERY_BUCKET"
+bucket_name = "central360-private-deliveries"

@@ -1,0 +1,67 @@
+
+/* Central 360 Games • Loja própria responsiva */
+.store-hero{position:relative;isolation:isolate;overflow:hidden;min-height:325px;display:flex;align-items:center;background:radial-gradient(ellipse at 75% 45%,#2c755b55,transparent 59%),linear-gradient(118deg,#101a24,#12362d 85%);border:1px solid #4c785e;border-radius:17px;margin:12px 0 35px}
+.store-hero:before{content:"";position:absolute;inset:0;z-index:-2;background:repeating-linear-gradient(90deg,transparent 0 48px,#a5ff9a0a 48px 49px)}
+.store-hero>img{position:absolute;z-index:-1;right:-75px;top:0;width:65%;height:100%;object-fit:cover;mask-image:linear-gradient(90deg,transparent 0%,#000 40%);opacity:.85}
+.store-hero-copy{max-width:680px;padding:45px 42px;position:relative;z-index:1}
+.store-hero h1{font-size:clamp(31px,3.5vw,49px);font-weight:950;line-height:1.12;margin:14px 0}
+.store-hero h1 span{color:var(--green)}
+.store-hero p{max-width:610px;line-height:1.7;font-size:14px;color:#c7d8cf}
+.store-hero-tag{display:inline-flex;padding:10px 14px;background:#163f31;border:1px solid #6eb36e;border-radius:100px;font-size:12px;color:#b9f7ac;font-weight:800;margin-top:10px}
+.store-catalog-section{margin:0 0 31px}
+.store-message{margin:8px 0 22px;padding:13px 15px;border-radius:10px;background:#182634;border:1px solid #42566b;font-size:13px;color:#a9c6be}
+.store-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.store-product{background:#131e2b;border:1px solid #2f4456;border-radius:13px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.store-cover{aspect-ratio:16/10;overflow:hidden;background:#18312c}
+.store-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .22s}
+.store-product:hover .store-cover img{transform:scale(1.045)}
+.store-product-content{display:flex;flex-direction:column;align-items:flex-start;flex:1;padding:18px}
+.store-category{color:#9fe8a6;text-transform:uppercase;letter-spacing:1.25px;font-size:10px;font-weight:900}
+.store-product h3{font-size:17px;line-height:1.35;margin:8px 0 10px;letter-spacing:-.25px}
+.store-product p{font-size:12px;line-height:1.7;flex:1;margin:0 0 15px}
+.store-not-yet{display:inline-block;padding:7px 10px;border:1px solid #6f6650;border-radius:7px;background:#2c2b27;color:#efdda9;font-size:10px;letter-spacing:.5px;font-weight:900}
+.store-price{color:#aafb90;font-size:23px;letter-spacing:-.5px;margin-bottom:12px}
+.store-add{width:100%;padding:12px 9px;font-size:11px;letter-spacing:.3px;font-weight:950;border-radius:8px;color:#112412;background:#8ee06d;cursor:pointer}
+.store-add:hover{background:#b4fb96}
+.store-cart{margin:30px 0;padding:26px;border:1px solid #60906e;border-radius:14px;background:linear-gradient(125deg,#18382e,#17202e)}
+.store-cart[hidden]{display:none}
+.store-cart-heading{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.store-cart-heading h2{margin:0;font-size:25px}
+.store-cart-heading strong{font-size:23px;color:#a9f18d}
+.store-cart ul{list-style:none;padding:15px 0;margin:0}
+.store-cart li{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:10px 0;border-bottom:1px solid #496455;font-size:13px}
+.store-cart label{display:block;font-size:13px;font-weight:850;margin:16px 0 9px}
+.store-cart input[type=email]{width:min(100%,460px);background:#0c1b20;border:1px solid #5a866e;border-radius:8px;padding:13px 14px;color:#f1fff5;font-size:15px}
+.store-small{font-size:11px;max-width:640px;line-height:1.6}
+.store-feedback{color:#edc9a4;font-size:13px}
+.store-security{margin:34px 0 24px}
+.store-security h2{font-size:25px}
+.store-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin:18px 0}
+.store-steps>div{background:#131e2b;border:1px solid #334756;border-radius:11px;padding:21px;display:flex;flex-direction:column;gap:9px}
+.store-steps b{color:#8dea7f;font-size:23px}
+.store-steps strong{font-size:16px}
+.store-steps span{font-size:12px;line-height:1.6;color:#a5b7c4}
+.store-security>p{font-size:12px;color:#98a9b7;line-height:1.65}
+.store-order{max-width:850px;margin:18px auto 54px;padding:28px;border:1px solid #406758;border-radius:15px;background:#121f29}
+.store-order h1{font-size:35px;margin:11px 0}
+.store-order>p{font-size:14px;line-height:1.7}
+.store-order code{word-break:break-all;color:#afe9aa}
+.store-order-summary{background:#162b2c;border-radius:9px;padding:19px 20px;margin:14px 0}
+.store-order-summary>div{display:flex;justify-content:space-between;align-items:center}
+.store-order-summary b{font-size:23px;color:#aff19b}
+.store-order-summary ul{padding-left:20px}
+.store-order-summary li{font-size:13px;padding:4px 0}
+.store-pix-panel{padding:25px;border-radius:11px;background:#e7f6e9;color:#10221a;margin:18px 0}
+.store-pix-panel h2{color:#14291c}
+.store-pix-panel>img{display:block;max-width:220px;width:100%;margin:15px auto;background:white;padding:7px;border-radius:8px}
+.store-pix-panel p{font-size:13px;color:#294532}
+.store-pix-panel textarea{width:100%;resize:none;min-height:90px;border:1px solid #6b9e73;border-radius:8px;padding:9px;font-size:12px;overflow-wrap:anywhere}
+.store-pix-panel .btn{color:#16331a}
+.store-success{padding:24px;margin:20px 0;background:#193c2c;border:1px solid #77c774;border-radius:12px}
+.store-success h2{margin:0 0 8px;font-size:24px;color:#beffb8}
+.store-success p{font-size:13px;line-height:1.65}
+.store-success a.btn{display:inline-block;margin:5px 7px 5px 0}
+#paymentBrick_container{max-width:700px;margin:25px auto}
+@media(max-width:1120px){.store-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.store-hero{min-height:320px}.store-hero>img{width:95%;opacity:.25}.store-hero-copy{padding:32px 24px}.store-hero h1{font-size:34px}.store-steps{grid-template-columns:1fr}.store-steps>div{flex-direction:row;align-items:center;flex-wrap:wrap}.store-steps span{width:100%}.store-order{padding:21px}}
+@media(max-width:480px){.store-grid{grid-template-columns:1fr}.store-product{max-width:560px}.store-hero h1{font-size:32px}.store-cart{padding:17px}.store-cart-heading strong{font-size:19px}.store-order{padding:18px}.store-order h1{font-size:29px}}

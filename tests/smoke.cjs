@@ -16,6 +16,8 @@ const source = {
   html: fs.readFileSync(path.join(root, "index.html"), "utf8"),
   css: fs.readFileSync(path.join(root, "assets/style.css"), "utf8"),
   promoCss: fs.readFileSync(path.join(root, "assets/promos.css"), "utf8"),
+  storeCss: fs.readFileSync(path.join(root, "assets/store.css"), "utf8"),
+  store: fs.readFileSync(path.join(root, "assets/store.js"), "utf8"),
   promos: fs.readFileSync(path.join(root, "assets/promos.js"), "utf8"),
   data: fs.readFileSync(path.join(root, "assets/data.js"), "utf8"),
   videos: fs.readFileSync(path.join(root, "assets/videos.js"), "utf8"),
@@ -61,6 +63,7 @@ function boot(hash = "#/", mutate) {
   if (mutate) mutate(window.C360_GAMES, window.C360_VIDEOS);
   vm.runInContext(source.library, context, { filename: "biblioteca.js" });
   vm.runInContext(source.promos, context, { filename: "promos.js" });
+  vm.runInContext(source.store, context, { filename: "store.js" });
   vm.runInContext(source.app, context, { filename: "app.js" });
   return {
     window, document,
@@ -374,4 +377,26 @@ test("promo automático respeita origem e intervalo de sete dias", () => {
   assert.match(code,/last&&Date\.now\(\)-last<cooldownMs/);
   assert.match(code,/hash!=="#\/"/);
   assert.match(code,/visibilityState==="hidden"/);
+});
+
+
+test("site carrega vitrine própria, não checkout ativo no Pages", () => {
+ const page=boot("#/loja");
+ assert.match(page.html,/Loja Central 360/);
+ assert.match(page.html,/PES 2021 PC/);
+ assert.match(page.html,/Dragon Ball Budokai Tenkaichi 3/);
+ assert.match(page.html,/IA do Seu Jeito/);
+ assert.match(page.html,/EM REVISÃO • SEM COBRANÇA/);
+ assert.match(page.get("store-message").textContent,/checkout ainda está em preparação/);
+ assert.ok(source.html.includes('src="./assets/store.js"'));
+ assert.ok(source.html.includes('href="./assets/store.css"'));
+ assert.match(source.storeCss,/\.store-cart/);
+});
+
+test("site tem rota de pedido mas não expõe arquivos protegidos", () => {
+ const page=boot("#/pedido/b4c170d8-d5f9-4c16-8580-10adf0ab482d");
+ assert.match(page.html,/Seu pedido/);
+ assert.match(page.html,/Verificando a compra com segurança/);
+ assert.doesNotMatch(page.html,/chave=[a-f0-9]{64}/);
+ assert.doesNotMatch(source.html,/MP_ACCESS_TOKEN|RESEND_API_KEY|DELIVERY_SECRET/);
 });
