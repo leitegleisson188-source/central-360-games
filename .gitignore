@@ -1,0 +1,6 @@
+commerce/public/
+commerce/node_modules/
+commerce/.wrangler/
+commerce/.dev.vars
+commerce/.env
+commerce/.env.*
