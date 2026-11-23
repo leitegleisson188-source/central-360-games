@@ -24,6 +24,19 @@ Este repositório é **público** e já tem o `index.html` na raiz.
 - `assets/logo-central360.webp` — logotipo oficial otimizado.
 - `robots.txt` — **solicita que mecanismos de busca não indexem esta prévia**, mas não torna o site privado.
 
+
+## Biblioteca de vídeos do canal Central 360
+
+A seção [Biblioteca de Vídeos](https://leitegleisson188-source.github.io/central-360-games/#/biblioteca) organiza vídeos do canal oficial [Central 360 (@central_360)](https://www.youtube.com/@central_360), incluindo tutoriais de Aurora, desbloqueio do Xbox 360, kernel, instalação de patches com Horizon, HD externo e jogos online.
+
+- `assets/videos.js`: lista curada de vídeos com ID do YouTube, título, resumo editorial, categoria, duração e tags.
+- `assets/biblioteca.js`: renderização da biblioteca, pesquisa, categorias, ordenação e cards.
+- `assets/style.css`: visual gamer e cards com thumbnails oficiais de vídeos hospedados no YouTube.
+
+A biblioteca mostra miniaturas do YouTube a partir dos IDs verificados e envia o visitante ao vídeo original ao clicar em **Assistir**. **Nenhum vídeo é copiado ou hospedado no GitHub Pages.** Os resumos são próprios; links e títulos devem ser verificados antes de novas inserções.
+
+Para adicionar vídeos, acrescente um novo registro em `window.C360_VIDEOS` dentro de `assets/videos.js`. Use o ID de 11 caracteres do vídeo real, em vez de inventar links. As categorias existentes podem ser expandidas sem alterar o layout.
+
 ## Conteúdo e manutenção
 
 Todos os registros atuais são demonstrações. Não há links de download de jogos comerciais, nem checkout operacional. Para preencher o catálogo com conteúdo real, edite `assets/data.js` ou utilize o editor separado mantido na branch `site-central-360-games-preview` do repositório **privado** `central-360-arena`. Não publique o editor de catálogo neste site aberto.
