@@ -2,7 +2,7 @@
 
 /**
  * Testes sem dependências do protótipo Central 360 Games.
- * Execução: node --test portal-games/tests/smoke.cjs
+ * Execução: node --test tests/smoke.cjs
  * Não substitui uma validação visual em navegador real.
  */
 const test = require("node:test");
@@ -16,6 +16,8 @@ const source = {
   html: fs.readFileSync(path.join(root, "index.html"), "utf8"),
   css: fs.readFileSync(path.join(root, "assets/style.css"), "utf8"),
   data: fs.readFileSync(path.join(root, "assets/data.js"), "utf8"),
+  videos: fs.readFileSync(path.join(root, "assets/videos.js"), "utf8"),
+  library: fs.readFileSync(path.join(root, "assets/biblioteca.js"), "utf8"),
   app: fs.readFileSync(path.join(root, "assets/app.js"), "utf8"),
 };
 
@@ -40,7 +42,7 @@ function boot(hash = "#/", mutate) {
     return elements.get(id);
   };
   const document = { getElementById: get, querySelectorAll() { return []; }, title: "" };
-  const location = { hash, pathname: "/central-360-arena/", search: "" };
+  const location = { hash, pathname: "/central-360-games/", search: "" };
   const window = { location, addEventListener() {}, scrollTo() {} };
   const history = {
     replaceState(_state, _title, url) {
@@ -53,7 +55,9 @@ function boot(hash = "#/", mutate) {
     encodeURIComponent, decodeURIComponent, console,
   });
   vm.runInContext(source.data, context, { filename: "data.js" });
-  if (mutate) mutate(window.C360_GAMES);
+  vm.runInContext(source.videos, context, { filename: "videos.js" });
+  if (mutate) mutate(window.C360_GAMES, window.C360_VIDEOS);
+  vm.runInContext(source.library, context, { filename: "biblioteca.js" });
   vm.runInContext(source.app, context, { filename: "app.js" });
   return {
     window, document,
@@ -67,7 +71,7 @@ function boot(hash = "#/", mutate) {
 test("arquivos essenciais e identidade do portal presentes", () => {
   assert.match(source.html, /<html lang="pt-BR">/);
   assert.match(source.html, /<main|id="app"/);
-  for (const asset of ["./assets/style.css", "./assets/data.js", "./assets/app.js", "./assets/logo-central360.webp"]) {
+  for (const asset of ["./assets/style.css", "./assets/data.js", "./assets/videos.js", "./assets/biblioteca.js", "./assets/app.js", "./assets/logo-central360.webp"]) {
     assert.ok(source.html.includes(asset), "referência ausente: " + asset);
   }
   for (const file of ["assets/logo-central360.webp", "README.md"]) {
@@ -158,4 +162,52 @@ test("URL válida do YouTube gera incorporação sem cookies", () => {
     items[0].videoUrl = "https://www.youtube.com/watch?v=ABCDEFGHIJK";
   });
   assert.match(page.html, /youtube-nocookie.com\/embed\/ABCDEFGHIJK/);
+});
+
+
+test("canal Central 360 e 16 vídeos oficiais estão cadastrados", () => {
+  const { window } = boot();
+  assert.equal(window.C360_CHANNEL.id, "UCoU4Fib0QanopKfzGUJ_nMQ");
+  assert.equal(window.C360_CHANNEL.handle, "@central_360");
+  const videos = window.C360_VIDEOS;
+  assert.ok(videos.length >= 15);
+  assert.equal(new Set(videos.map(v => v.id)).size, videos.length);
+  for (const video of videos) {
+    assert.match(video.id, /^[\w-]{11}$/);
+    assert.ok(video.title && video.description && video.category);
+    assert.match(video.duration, /^\d+:\d\d$/);
+  }
+});
+
+test("biblioteca abre com filtros, miniaturas e link direto para o YouTube", () => {
+  const page = boot("#/biblioteca");
+  assert.match(page.html, /UMA BIBLIOTECA PARA/);
+  assert.match(page.html, /id="video-query"/);
+  assert.match(page.html, /id="video-explore"/);
+  assert.match(page.get("video-grid").innerHTML, /youtube\.com\/watch\?v=MS5vz6Cgo80/);
+  assert.match(page.get("video-grid").innerHTML, /i\.ytimg\.com\/vi\/MS5vz6Cgo80/);
+  assert.match(page.get("video-grid").innerHTML, /target="_blank" rel="noopener noreferrer"/);
+  assert.match(page.get("video-categories").innerHTML, /Aurora/);
+  assert.match(page.get("video-count").textContent, /vídeos encontrados/);
+});
+
+test("biblioteca filtra por tema e pesquisa na URL", () => {
+  const page = boot("#/biblioteca?categoria=Aurora&q=configurar");
+  assert.match(page.get("video-grid").innerHTML, /Aurora no Xbox 360 RGH/);
+  assert.doesNotMatch(page.get("video-grid").innerHTML, /FC 26 no Xbox 360/);
+  assert.equal(page.get("video-query").value, "configurar");
+  assert.match(page.window.location.hash, /categoria=Aurora/);
+});
+
+test("pesquisa vazia apresenta um estado de nenhum resultado", () => {
+  const page = boot("#/biblioteca?q=palavra-inexistente-123456");
+  assert.match(page.get("video-grid").innerHTML, /Nenhum vídeo encontrado/);
+});
+
+test("home e tutoriais divulgam vídeos reais do canal", () => {
+  const home = boot("#/");
+  const tutorial = boot("#/tutoriais");
+  assert.match(home.html, /Nossa biblioteca de vídeos/);
+  assert.match(home.html, /youtube\.com\/watch\?v=/);
+  assert.match(tutorial.html, /Tutoriais em vídeo/);
 });
