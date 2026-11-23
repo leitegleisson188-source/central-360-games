@@ -70,10 +70,11 @@ test("arquivos essenciais e identidade do portal presentes", () => {
   for (const asset of ["./assets/style.css", "./assets/data.js", "./assets/app.js", "./assets/logo-central360.webp"]) {
     assert.ok(source.html.includes(asset), "referência ausente: " + asset);
   }
-  for (const file of ["assets/logo-central360.webp", "editor.html", "README.md"]) {
+  for (const file of ["assets/logo-central360.webp", "README.md"]) {
     assert.ok(fs.statSync(path.join(root, file)).isFile(), "arquivo ausente: " + file);
   }
   assert.ok(source.css.includes("@media"), "faltam estilos responsivos");
+  assert.equal(fs.existsSync(path.join(root, "editor.html")), false, "editor interno não deve ser publicado");
 });
 
 test("catálogo demonstrativo tem slugs únicos e campos principais", () => {
