@@ -18,7 +18,7 @@ items.map(function(p){return '<a class="feature-promo-card theme-'+escapeHtml(p.
 window.C360_PROMOS={items:items,featureSection:featureSection};
 var root,active=0,lastManualTrigger=null;
 var storageKey="c360-promos-last-auto-v1",cooldownMs=7*24*60*60*1000;
-function safeRead(){try{return Number(window.localStorage.getItem(storageKey)||0)}catch(e){return 0}}
+function safeRead(){try{return Number(window.localStorage.getItem(storageKey)||0)}catch(e){return Date.now()}}
 function safeWrite(v){try{window.localStorage.setItem(storageKey,String(v))}catch(e){}}
 function chosen(){return Math.floor(Date.now()/(7*24*60*60*1000))%items.length}
 function renderPopup(){
