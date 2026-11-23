@@ -20,7 +20,7 @@ return '<div class="store-grid">'+planned.map(function(p){return '<article class
 }
 function page(){
 return '<main class="container content-layout">'+breadcrumbs("Loja")+
-'<section class="store-hero"><div class="store-hero-copy"><span class="eyebrow">CENTRAL 360 • LOJA PRÓPRIA</span><h1>Seu próximo conteúdo, <span>direto da Central 360.</span></h1><p>Estamos criando uma loja independente para produtos digitais autorizados, e-books e conteúdos próprios. Carrinho, pagamento e entrega acontecerão na nossa plataforma, após a implantação segura.</p><span class="store-hero-tag">Sem Nuvemshop • Checkout Mercado Pago planejado</span></div><img src="./assets/art-xbox-biblioteca.svg" alt="" decoding="async"></section>'+
+'<section class="store-hero"><div class="store-hero-copy"><span class="eyebrow">Loja Central 360 • LOJA PRÓPRIA</span><h1>Seu próximo conteúdo, <span>direto da Central 360.</span></h1><p>Estamos criando uma loja independente para produtos digitais autorizados, e-books e conteúdos próprios. Carrinho, pagamento e entrega acontecerão na nossa plataforma, após a implantação segura.</p><span class="store-hero-tag">Sem Nuvemshop • Checkout Mercado Pago planejado</span></div><img src="./assets/art-xbox-biblioteca.svg" alt="" decoding="async"></section>'+
 '<section class="store-catalog-section" aria-labelledby="store-title"><div class="section-head"><div><div class="eyebrow">CATÁLOGO EM CONSTRUÇÃO</div><h2 id="store-title">Produtos e lançamentos</h2></div><a class="section-link" href="#/biblioteca">VER VÍDEOS ↗</a></div><p id="store-message" role="status" class="store-message">Consultando disponibilidade da loja segura…</p><div id="store-products">'+preview()+'</div></section>'+
 '<section id="store-cart" class="store-cart" hidden aria-label="Carrinho de compras"></section>'+
 '<section class="store-security"><h2>Como será sua compra?</h2><div class="store-steps"><div><b>01</b><strong>Escolha</strong><span>Selecione materiais publicados e licenciados.</span></div><div><b>02</b><strong>Pague com segurança</strong><span>Pix ou cartão por componentes oficiais do Mercado Pago.</span></div><div><b>03</b><strong>Receba</strong><span>Após confirmação bancária, download privado e aviso por e-mail.</span></div></div><p>Produtos físicos e mídias com direitos de terceiros exigem fluxos próprios e validação de licenças. Nenhum material em revisão pode ser comprado nesta prévia.</p></section></main>';
@@ -55,7 +55,7 @@ if(!ready)return;
 const form=event.currentTarget,feedback=document.getElementById("store-checkout-feedback"),button=form.querySelector("button");
 button.disabled=true;feedback.textContent="Preparando pedido…";
 try{
-const email=String(form.email.value||"").trim();
+const email=String(form.elements.namedItem("email")?.value||"").trim();
 const created=await api("/api/orders",{method:"POST",body:JSON.stringify({email,items:[...cart]})});
 try{sessionStorage.setItem("c360-order-"+created.order_id,JSON.stringify({token:created.token,amount:created.amount,email}))}catch{}
 location.hash="#/pedido/"+created.order_id+"?chave="+encodeURIComponent(created.token);
