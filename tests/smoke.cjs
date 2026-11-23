@@ -183,7 +183,7 @@ test("biblioteca abre com filtros, miniaturas e link direto para o YouTube", () 
   const page = boot("#/biblioteca");
   assert.match(page.html, /UMA BIBLIOTECA PARA/);
   assert.match(page.html, /id="video-query"/);
-  assert.match(page.html, /#video-results/);
+  assert.match(page.html, /id="video-explore"/);
   assert.match(page.get("video-grid").innerHTML, /youtube\.com\/watch\?v=MS5vz6Cgo80/);
   assert.match(page.get("video-grid").innerHTML, /i\.ytimg\.com\/vi\/MS5vz6Cgo80/);
   assert.match(page.get("video-grid").innerHTML, /target="_blank" rel="noopener noreferrer"/);
