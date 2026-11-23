@@ -16,11 +16,12 @@ function fail(msg,status=400){return json({error:msg},status)}
 function cents(v){return Math.round(Number(v)*100)}
 function validEmail(s){return typeof s==="string"&&s.length<=180&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s)}
 function money(v){return Number((v/100).toFixed(2))}
-function enabled(env){return env.STORE_ENABLED==="true"&&!!(env.DB&&env.DELIVERY_BUCKET&&env.MP_ACCESS_TOKEN&&env.MP_PUBLIC_KEY&&env.MP_WEBHOOK_SECRET&&env.PUBLIC_ORIGIN&&env.RESEND_API_KEY&&env.FROM_EMAIL)}
+function enabled(env){return env.STORE_ENABLED==="true"&&!!(env.DB&&env.DELIVERY_BUCKET&&env.MP_ACCESS_TOKEN&&env.MP_PUBLIC_KEY&&env.MP_WEBHOOK_SECRET&&env.PUBLIC_ORIGIN&&env.RESEND_API_KEY&&env.FROM_EMAIL&&env.DELIVERY_SECRET)}
 function hex(u8){return [...u8].map(b=>b.toString(16).padStart(2,"0")).join("")}
 async function hash(input){return hex(new Uint8Array(await crypto.subtle.digest("SHA-256",encode.encode(input))))}
 function authToken(req){let s=req.headers.get("authorization")||"";return /^Bearer [a-z0-9]{64}$/i.test(s)?s.slice(7):""}
 function randomToken(){const b=new Uint8Array(32);crypto.getRandomValues(b);return hex(b)}
+async function deliveryToken(env,id){const key=await crypto.subtle.importKey("raw",encode.encode(env.DELIVERY_SECRET),{name:"HMAC",hash:"SHA-256"},false,["sign"]);return hex(new Uint8Array(await crypto.subtle.sign("HMAC",key,encode.encode(id))))}
 async function readBody(req){if(Number(req.headers.get("content-length")||"0")>32000)throw Error("Corpo muito grande");const text=await req.text();if(text.length>32000)throw Error("Corpo muito grande");return JSON.parse(text||"{}")}
 function normalizedUrl(v){try{let u=new URL(v);if(u.protocol==="https:"&&!u.username&&!u.password)return u.origin}catch{}return ""}
 function safeProduct(p){return {id:p.id,title:p.title,description:p.description,category:p.category,price_cents:p.price_cents,currency:"BRL",image:p.image||"",digital:true}}
@@ -29,7 +30,8 @@ async function authOrder(req,env,id){
  const order=await env.DB.prepare("SELECT * FROM orders WHERE id=?").bind(id).first();
  if(!order)return null;
  const expected=await hash(token);
- return order.access_hash===expected?order:null;
+ const emailAccess=env.DELIVERY_SECRET?await deliveryToken(env,id):"";
+ return order.access_hash===expected||emailAccess===token?order:null;
 }
 async function orderLines(env,id){const r=await env.DB.prepare("SELECT product_id,title,price_cents,asset_key,download_name FROM order_items WHERE order_id=? ORDER BY product_id").bind(id).all();return r.results||[]}
 async function paymentsApi(env,path,method="GET",body=null,idempotency=null){
@@ -61,11 +63,10 @@ async function sendDelivery(env,order){
  if(!order||order.status!=="paid"||!env.RESEND_API_KEY||!env.FROM_EMAIL||!env.PUBLIC_ORIGIN)return;
  // Token necessário para reabrir pedido e baixar arquivo. Guardamos apenas o hash.
  // Ele fica disponível nesta execução via ticket pré-gerado de entrega.
- const ticket=await env.DB.prepare("SELECT delivery_token FROM order_delivery_tickets WHERE order_id=?").bind(order.id).first();
- if(!ticket)return; // sem ticket: não envie link inválido
+ const token=await deliveryToken(env,order.id);
  const claim=await env.DB.prepare("UPDATE orders SET email_sent_at=CURRENT_TIMESTAMP WHERE id=? AND email_sent_at IS NULL AND status='paid'").bind(order.id).run();
  if(!(claim.meta?.changes>0))return;
- const u=env.PUBLIC_ORIGIN+"/#/pedido/"+order.id+"?chave="+ticket.delivery_token;
+ const u=env.PUBLIC_ORIGIN+"/#/pedido/"+order.id+"?chave="+token;
  const items=await orderLines(env,order.id);
  const text="Seu pagamento na Central 360 foi confirmado.\n\nItens:\n"+items.map(x=>"- "+x.title).join("\n")+"\n\nAcesse seus arquivos: "+u+"\n\nGuarde esta mensagem e não compartilhe o link.";
  try{
@@ -130,8 +131,6 @@ async function handler(req,env,ctx){
   const id=crypto.randomUUID(),token=randomToken(),h=await hash(token);
   const statements=[env.DB.prepare("INSERT INTO orders(id,email,access_hash,amount_cents,status) VALUES(?,?,?,?, 'created')").bind(id,email,h,amount)];
   for(const p of rows)statements.push(env.DB.prepare("INSERT INTO order_items(order_id,product_id,title,price_cents,asset_key,download_name) VALUES(?,?,?,?,?,?)").bind(id,p.id,p.title,p.price_cents,p.asset_key,p.download_name||"material.pdf"));
-  // Ticket privado é armazenado em tabela restrita somente ao Worker.
-  statements.push(env.DB.prepare("INSERT INTO order_delivery_tickets(order_id,delivery_token) VALUES(?,?)").bind(id,token));
   await env.DB.batch(statements);
   return json({order_id:id,token,amount:money(amount),total_cents:amount,items:rows.map(safeProduct)},201);
  }
