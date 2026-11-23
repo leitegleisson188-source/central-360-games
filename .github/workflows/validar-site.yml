@@ -21,4 +21,12 @@ jobs:
         with:
           node-version: '22'
       - name: Rodar testes de navegação e conteúdo
-        run: node --test tests/smoke.cjs
+        run: node --test tests/*.test.cjs
+      - name: Verificar Worker e preparar assets da loja
+        run: |
+          node --check commerce/worker.mjs
+          node commerce/scripts/prepare-assets.mjs
+          test -s commerce/public/index.html
+          test -s commerce/public/assets/store.js
+          test ! -e commerce/public/worker.mjs
+          test ! -e commerce/public/schema.sql
