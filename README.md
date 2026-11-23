@@ -72,3 +72,25 @@ Todos os links levam ao vídeo original no YouTube, sem re-hospedar conteúdo. A
 5. A seção é estática: a inclusão de novos vídeos exige atualização do arquivo; não há acesso automático à conta do YouTube pela página.
 
 **Observação:** o arquivo `robots.txt` da fase de prévia ainda desestimula indexação; avaliar sua remoção e a revisão de todo o conteúdo antes do lançamento público definitivo.
+
+## Artes promocionais e avisos pop-in
+
+O portal possui três ilustrações vetoriais originais, desenvolvidas para não depender de imagens de jogos ou marcas externas:
+
+- `assets/art-tutoriais.svg` — biblioteca de vídeos e tutoriais;
+- `assets/art-patch-classico.svg` — futebol virtual nostálgico;
+- `assets/art-xbox-biblioteca.svg` — interface gamer e Xbox 360 RGH em arte genérica.
+
+As três aparecem na homepage como cards clicáveis e também alimentam três campanhas do aviso promocional no canto inferior. Em `assets/promos.js`, o array `items` define o título, o texto, a imagem, o link e o botão de cada campanha. `assets/promos.css` mantém o visual responsivo.
+
+### Regras do pop-in
+
+- Abre automaticamente **no máximo uma vez a cada sete dias** (quando o navegador permite armazenamento local), apenas na homepage, após aproximadamente 10,5 segundos no desktop ou 14 segundos no celular;
+- Pode ser fechado imediatamente no botão **×** ou por **Escape**;
+- Possui botão **Próximo** para percorrer as três campanhas;
+- Pode ser reaberto a qualquer momento pelo botão **Novidades** no cabeçalho, sem esperar o prazo;
+- Não interfere no checkout, não redireciona automaticamente nem usa cookies de rastreamento.
+- O navegador pode bloquear o registro de frequência quando armazenamento local está indisponível; não use este pop-up para dados sensíveis.
+
+Os títulos e links levam somente a páginas editoriais do site ou aos tutoriais do canal. O texto da página de patch é informativo e **não anuncia download ou produto disponível**.
+
