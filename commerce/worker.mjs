@@ -126,6 +126,9 @@ async function handler(req,env,ctx){
   for(const id of ids){
    const p=await env.DB.prepare("SELECT * FROM products WHERE id=? AND active=1 AND rights_verified=1 AND asset_key IS NOT NULL AND asset_key!=''").bind(id).first();
    if(!p||!Number.isInteger(p.price_cents)||p.price_cents<=0)return fail("Um item não está disponível",409);
+   // Nunca cobrar se o arquivo comprado ainda não estiver no bucket privado.
+   const asset=await env.DELIVERY_BUCKET.head(p.asset_key);
+   if(!asset)return fail("Arquivo desse produto ainda não está disponível",409);
    rows.push(p);
   }
   const amount=rows.reduce((n,p)=>n+p.price_cents,0);
@@ -185,6 +188,7 @@ async function handler(req,env,ctx){
       if(current.status==="paid"&&ctx?.waitUntil)ctx.waitUntil(sendDelivery(env,current).catch(()=>{}));
     }catch{}
   }
+  if(current.status==="paid"&&!current.email_sent_at&&ctx?.waitUntil)ctx.waitUntil(sendDelivery(env,current).catch(()=>{}));
   const lines=await orderLines(env,current.id);
   return json({id:current.id,status:current.status,amount:money(current.amount_cents),payment_id:current.payment_id,items:lines.map(x=>({id:x.product_id,title:x.title,price_cents:x.price_cents,download:current.status==="paid"?"/api/download/"+encodeURIComponent(current.id)+"/"+encodeURIComponent(x.product_id):null}))});
  }
