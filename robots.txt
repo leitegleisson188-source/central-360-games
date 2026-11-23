@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /
+# Prévia não indexável. Isso não protege o acesso público.
