@@ -211,3 +211,76 @@ test("home e tutoriais divulgam vídeos reais do canal", () => {
   assert.match(home.html, /youtube\.com\/watch\?v=/);
   assert.match(tutorial.html, /Tutoriais em vídeo/);
 });
+
+
+test("acervo histórico incorpora 23 vídeos antigos públicos sem duplicatas", () => {
+  const { window } = boot("#/biblioteca");
+  const all = window.C360_VIDEOS;
+  const oldVideos = all.filter(v => v.archive === true);
+  assert.equal(all.length, 39);
+  assert.equal(oldVideos.length, 23);
+  assert.equal(new Set(all.map(v => v.id)).size, all.length);
+  for (const v of oldVideos) {
+    assert.match(v.id, /^[A-Za-z0-9_-]{11}$/);
+    assert.match(v.publishedAt, /^20[0-9]{2}-[0-9]{2}-[0-9]{2}$/);
+    assert.ok(v.tags.includes("acervo"));
+  }
+  assert.ok(oldVideos.some(v => v.id === "8vvOrY9kNZc"));
+  assert.ok(oldVideos.some(v => v.id === "uoDgRXmXvHY"));
+});
+
+test("nove guias temáticos só referenciam vídeos reais do próprio acervo", () => {
+  const { window } = boot();
+  const topics = window.C360_TOPICS;
+  const videos = window.C360_VIDEOS;
+  const ids = new Set(videos.map(v => v.id));
+  assert.equal(topics.length, 9);
+  assert.equal(new Set(topics.map(t => t.slug)).size, 9);
+  for (const topic of topics) {
+    assert.match(topic.slug, /^[a-z0-9-]+$/);
+    assert.ok(topic.title && topic.description && topic.intro);
+    for (const id of (topic.videoIds || []).concat(topic.relatedIds || []))
+      assert.ok(ids.has(id), topic.slug + ": vídeo não catalogado " + id);
+  }
+});
+
+test("biblioteca oferece páginas de assuntos e galeria de clássicos", () => {
+  const page = boot("#/biblioteca");
+  assert.match(page.html, /Explore por ferramenta ou tema/);
+  assert.match(page.html, /#\/biblioteca\/aurora/);
+  assert.match(page.html, /#\/biblioteca\/horizon/);
+  assert.match(page.html, /#\/biblioteca\/dashlaunch/);
+  assert.match(page.html, /Clássicos do nosso canal/);
+  assert.match(page.html, /#\/biblioteca\/acervo/);
+});
+
+test("páginas específicas de Aurora e Horizon mostram vídeos associados", () => {
+  const a = boot("#/biblioteca/aurora");
+  const h = boot("#/biblioteca/horizon");
+  assert.match(a.html, /Dashboard e organização do Xbox 360 RGH/);
+  assert.match(a.html, /youtube\.com\/watch\?v=MS5vz6Cgo80/);
+  assert.match(h.html, /Gerenciamento de arquivos e patches/);
+  assert.match(h.html, /youtube\.com\/watch\?v=8ecuaCbbzzc/);
+});
+
+test("DashLaunch não inventa vídeo próprio e sinaliza conteúdos relacionados", () => {
+  const page = boot("#/biblioteca/dashlaunch");
+  assert.match(page.html, /Tutorial específico ainda não localizado/);
+  assert.match(page.html, /não são tutoriais exclusivos de DashLaunch/);
+  assert.match(page.html, /youtube\.com\/watch\?v=MS5vz6Cgo80/);
+});
+
+test("acervo histórico apresenta vídeos antigos do canal em links externos seguros", () => {
+  const page = boot("#/biblioteca/acervo");
+  assert.match(page.html, /Clássicos do nosso canal/);
+  assert.match(page.html, /23/);
+  assert.match(page.html, /Alex Kidd in Miracle World completo/);
+  assert.match(page.html, /youtube\.com\/watch\?v=8vvOrY9kNZc/);
+  assert.match(page.html, /target="_blank" rel="noopener noreferrer"/);
+});
+
+test("slug temático desconhecido retorna mensagem de guia não encontrado", () => {
+  const page = boot("#/biblioteca/nada-aqui");
+  assert.match(page.html, /Assunto não encontrado/);
+  assert.match(page.html, /#\/biblioteca/);
+});

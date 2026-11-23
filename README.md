@@ -44,3 +44,31 @@ Todos os registros atuais são demonstrações. Não há links de download de jo
 Imagens, vídeos, downloads, descrições de compatibilidade e links comerciais só devem ser adicionados após conferência e autorização de uso. Depois do lançamento oficial, reavalie `robots.txt` para permitir a indexação nos buscadores.
 
 Contato: central.360.comercial@gmail.com · Instagram: https://www.instagram.com/central__360/
+
+## Acervo histórico e guias por ferramenta
+
+A biblioteca foi ampliada para **39 vídeos públicos verificados da Central 360**, incluindo **23 vídeos antigos** publicados entre 2024 e 2026. A área de acervo tem endereço `#/biblioteca/acervo`.
+
+Foram criadas páginas dedicadas com navegação própria:
+
+- `#/biblioteca/aurora` — configuração e atualização do Aurora.
+- `#/biblioteca/horizon` — Horizon, arquivos e patches.
+- `#/biblioteca/dashlaunch` — informações gerais e links relacionados (**não há vídeo específico confirmado**).
+- `#/biblioteca/kernel` — kernel 17559 e manutenção do console.
+- `#/biblioteca/hd-externo` — armazenamento e pendrives.
+- `#/biblioteca/desbloqueio` — métodos e cuidados.
+- `#/biblioteca/jogar-online` — multiplayer e servidores.
+- `#/biblioteca/patches` — Bomba Patch e patches clássicos.
+- `#/biblioteca/mods` — modificações e personalizações.
+
+Todos os links levam ao vídeo original no YouTube, sem re-hospedar conteúdo. As páginas têm notas introdutórias e recomendações de cuidado; **não substituem as instruções completas dos vídeos nem garantem compatibilidade de ferramentas**.
+
+### Para atualizar
+
+1. Acrescente apenas **IDs de vídeos confirmados como públicos do canal** em `assets/videos.js` (campo `window.C360_VIDEOS`).
+2. Evite repetir IDs. Para vídeos antigos, indique `archive: true` e `publishedAt: "AAAA-MM-DD"`.
+3. Associe os IDs à página temática em `window.C360_TOPICS` sem incluir vídeos de outros canais por engano.
+4. Execute `node --test tests/smoke.cjs` e revise as alterações na branch antes de publicar.
+5. A seção é estática: a inclusão de novos vídeos exige atualização do arquivo; não há acesso automático à conta do YouTube pela página.
+
+**Observação:** o arquivo `robots.txt` da fase de prévia ainda desestimula indexação; avaliar sua remoção e a revisão de todo o conteúdo antes do lançamento público definitivo.

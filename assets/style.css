@@ -97,3 +97,58 @@ main{min-height:60vh}.eyebrow{color:var(--green);font-size:11px;font-weight:900;
 @media(max-width:1170px){.desktop-nav{gap:12px}.desktop-nav a{font-size:10px}.brand{min-width:190px}.header-inner{gap:11px}}
 @media(max-width:980px){.desktop-nav{display:none}.menu-toggle{display:grid}.video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.video-hero-copy{padding:35px 29px}.video-hero h1{font-size:34px}}
 @media(max-width:650px){.video-hero{grid-template-columns:1fr;min-height:400px}.video-hero-copy{padding:30px 23px 85px}.video-hero h1{font-size:35px}.video-hero p{font-size:14px}.video-hero-gallery{position:absolute;inset:auto -65px -75px auto;width:270px;height:160px;opacity:.27;transform:rotate(-12deg)}.video-hero-tile{border-width:2px}.video-filters{flex-direction:column;align-items:stretch}.video-search{max-width:none}.video-sort{justify-content:space-between}.video-grid{grid-template-columns:1fr;gap:14px}.video-card{max-width:620px}.video-thumb-link{aspect-ratio:16/9}.video-categories{gap:7px}.video-chip{font-size:11px;padding:7px 11px}.video-promo{flex-direction:column;align-items:flex-start;padding:27px 23px}.video-promo h2{font-size:24px}}
+
+
+/* Acervo histórico e páginas de assuntos do canal */
+.topics-landing{padding-top:35px}
+.topics-landing .video-section-desc{max-width:850px}
+.topics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.topic-card{display:flex;align-items:center;gap:13px;min-width:0;padding:18px 15px;min-height:119px;background:linear-gradient(130deg,#17232e,#111d26);border:1px solid #304355;border-radius:12px;transition:background .2s,transform .2s,border-color .2s}
+.topic-card:hover{background:linear-gradient(125deg,#203b33,#162b31);border-color:#80df6399;transform:translateY(-3px)}
+.topic-icon{display:grid;place-items:center;flex:none;height:52px;width:52px;border:1px solid #567a5f;background:linear-gradient(150deg,#305743,#18302a);color:#b1fb83;font-weight:950;font-size:17px;letter-spacing:-.5px;border-radius:11px}
+.topic-copy{display:flex;flex:1;flex-direction:column;gap:2px;min-width:0}
+.topic-copy strong{font-size:16px;letter-spacing:-.3px;line-height:1.3}
+.topic-copy small{color:#91a9b6;font-size:11px;line-height:1.4}
+.topic-count{margin-top:6px;color:var(--green);font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.7px}
+.topic-arrow{align-self:flex-start;color:var(--green);font-weight:900;font-size:18px}
+.archive-teaser{padding-top:17px}
+.topic-header,.archive-header{border:1px solid #3b5e4e;background:radial-gradient(circle at 95% 15%,#2c705954,transparent 48%),linear-gradient(115deg,#111d29,#142722);border-radius:16px;padding:39px 40px;margin:11px 0 29px;position:relative;overflow:hidden}
+.topic-header:after,.archive-header:after{content:"360";font-size:180px;font-weight:950;letter-spacing:-14px;position:absolute;right:-40px;top:-65px;color:#ccffb306;pointer-events:none}
+.topic-heading{display:flex;align-items:center;gap:17px;margin:19px 0 14px;position:relative;z-index:1}
+.topic-header-icon{height:82px;width:82px;flex:none;border:1px solid #65966e;border-radius:16px;background:linear-gradient(140deg,#275f44,#1b302d);display:grid;place-items:center;color:#acfc81;font-size:25px;font-weight:950;box-shadow:inset 0 1px 25px #b2e8a318}
+.topic-heading h1{font-size:clamp(31px,3.7vw,52px);font-weight:950;line-height:1.08;margin:0 0 7px}
+.topic-subtitle{margin:0;font-size:15px;color:#9fbdaf}
+.topic-description{max-width:710px;color:#c4d7cb;font-size:15px;line-height:1.72;position:relative;z-index:1}
+.topic-header .hero-actions{position:relative;z-index:2}
+.topic-page-layout{display:grid;grid-template-columns:minmax(0,1fr) 288px;align-items:start;gap:25px}
+.topic-body{min-width:0}
+.topic-body>h2{font-size:25px;margin:25px 0 13px}
+.topic-body>h2:first-child{margin-top:0}
+.topic-body>p{font-size:14px;line-height:1.8;max-width:760px}
+.topic-body .video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.topic-tips{background:#141e2a;border:1px solid #2d4153;border-radius:12px;padding:23px 25px 23px 42px;color:#c6d5dc}
+.topic-tips li{font-size:14px;line-height:1.7;margin-bottom:9px}
+.topic-tips li:last-child{margin-bottom:0}
+.topic-tips li::marker{color:var(--green)}
+.topic-no-video{border:1px dashed #657a74;border-radius:13px;background:#19262a;padding:25px;margin:17px 0;color:#d9e8db}
+.topic-no-video strong{font-size:16px}
+.topic-no-video p{font-size:13px;margin:10px 0 0}
+.topic-related-note{color:#aac0bb}
+.topic-sidebar{display:grid;gap:15px;position:sticky;top:111px}
+.topic-sidebar-panel{padding:19px;border-radius:13px;background:#151f2b;border:1px solid #314354}
+.topic-sidebar-panel h3{font-size:16px;margin:0 0 12px}
+.topic-sidebar-panel p{font-size:13px;line-height:1.7}
+.topic-side-links{display:flex;flex-direction:column}
+.topic-side-links a{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #2c3b4e;padding:11px 0;font-size:13px;font-weight:750;color:#c7d5df}
+.topic-side-links a:hover{color:var(--green)}
+.topic-side-links a span:last-child{color:var(--green)}
+.topic-missing{padding:75px 20px;text-align:center}
+.topic-missing h1{font-size:35px}
+.topic-missing p{margin:0 0 20px}
+.archive-header{background:radial-gradient(circle at 92% 8%,#4b543677,transparent 52%),linear-gradient(120deg,#14262b,#212c21)}
+.archive-header h1{font-size:clamp(34px,4vw,51px);line-height:1.13;margin:16px 0}
+.archive-header p{max-width:820px;color:#bfcec3;font-size:15px;line-height:1.7}
+.archive-stats{color:#aed4b2;font-size:13px;letter-spacing:.2px;margin:12px 0 21px}
+.archive-stats strong{color:var(--green);font-size:20px}
+@media(max-width:1050px){.topics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topic-page-layout{grid-template-columns:1fr}.topic-sidebar{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}.topic-body .video-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:690px){.topics-grid{grid-template-columns:1fr;gap:9px}.topic-card{min-height:95px;padding:13px}.topic-icon{height:46px;width:46px}.topic-copy strong{font-size:15px}.topic-header,.archive-header{padding:28px 21px}.topic-header-icon{height:63px;width:63px;border-radius:12px;font-size:19px}.topic-heading{gap:12px}.topic-heading h1{font-size:35px}.topic-subtitle{font-size:12px}.topic-description{font-size:14px}.topic-page-layout{gap:15px}.topic-body>h2{font-size:22px}.topic-sidebar{grid-template-columns:1fr}.topic-body .video-grid{grid-template-columns:1fr}.topic-tips{padding:19px 18px 19px 35px}.archive-header h1{font-size:35px}}
